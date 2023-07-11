@@ -103,4 +103,6 @@ class GasStation {
     "houseNumber": houseNumber,
     "postCode": postCode,
   };
+
+  String getSuperPrice() => e5.toString().replaceAll(".", ",");
 }

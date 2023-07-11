@@ -5,7 +5,7 @@ import 'package:dash_dashboard/services/gas_service.dart';
 import 'package:dash_dashboard/utils/mocks/MockGasStations.dart';
 import 'package:flutter/material.dart';
 
-import 'sections/gas/gas_information_row.dart';
+import 'sections/gas/gas_information.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

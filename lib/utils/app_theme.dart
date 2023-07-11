@@ -9,9 +9,13 @@ class AppTheme {
     textTheme:  const TextTheme(
       titleLarge: TextStyle(
         fontWeight: FontWeight.bold,
+        fontSize: 100,
+        color: AppColors.white,
+      ),
+      titleMedium: TextStyle(
+        fontWeight: FontWeight.bold,
         fontSize: 22,
         color: AppColors.white,
-        fontFamily: "OpenSans-ExtraBold",
       ),
       bodyMedium: TextStyle(fontSize: 16, color: AppColors.white),
     ),

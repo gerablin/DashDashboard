@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:dash_dashboard/utils/size_config.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Clock extends StatefulWidget {
@@ -46,7 +47,7 @@ class _ClockState extends State<Clock> {
     return  Align(
       alignment: Alignment.topRight,
       child: SizedBox(
-          child: Text(_clockText,style: TextStyle(fontSize: SizeConfig.blockSizeVertical*10),)
+          child: Text(_clockText,style: Theme.of(context).textTheme.titleLarge,)
       ),
     );
   }

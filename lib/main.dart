@@ -1,6 +1,8 @@
 import 'package:dash_dashboard/home_screen/home_screen.dart';
+import 'package:dash_dashboard/utils/app_colors.dart';
 import 'package:dash_dashboard/utils/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme:AppTheme.themeData,
+      theme: AppTheme.themeData.copyWith(
+          textTheme: GoogleFonts.manropeTextTheme().copyWith(
+              titleLarge: GoogleFonts.manrope(
+                  textStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 64,
+                color: AppColors.white,
+              )),
+              titleMedium: GoogleFonts.manrope(
+                  textStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: AppColors.white,
+              )),
+              bodyMedium: GoogleFonts.manrope(
+                  textStyle:
+                      const TextStyle(fontSize: 14, color: AppColors.white)))),
       home: const HomeScreen(),
     );
   }
