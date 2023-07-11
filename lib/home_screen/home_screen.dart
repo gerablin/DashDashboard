@@ -19,7 +19,10 @@ class HomeScreen extends StatelessWidget {
       ),
       body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [Clock(), GasInformation()],
+        children: [
+          Clock(),
+          GasInformation(),
+        ],
       ),
     );
   }

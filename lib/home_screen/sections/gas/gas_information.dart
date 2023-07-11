@@ -38,7 +38,7 @@ class _GasInformationState extends State<GasInformation> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child:  Text(textAlign: TextAlign.left,style: Theme.of(context).textTheme.titleMedium, "Tankstellen",),
+            child:  Text(textAlign: TextAlign.left,style: Theme.of(context).textTheme.titleMedium, " ~ Tankstellen",),
           ),
           Row(
             children: [
