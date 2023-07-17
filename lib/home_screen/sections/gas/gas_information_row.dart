@@ -15,7 +15,7 @@ class GasStationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: SizeConfig.blockSizeHorizontal * 15,
+      width: SizeConfig.blockSizeHorizontal * 16,
       height: SizeConfig.blockSizeVertical * 30,
       child: Card(
         color: Colors.black12,
@@ -29,10 +29,18 @@ class GasStationRow extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text(textAlign: TextAlign.center, style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleMedium, "${station.getSuperPrice()} €"),
+                child: Column(
+                  children: [
+                    Text(textAlign: TextAlign.center, style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleMedium, "${station.getSuperPrice()} €"),
+                    Text(textAlign: TextAlign.center, style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleSmall, "${station.dist.toString()} KM")
+                  ],
+                ),
               ),
               Text(textAlign: TextAlign.center, style: Theme
                   .of(context)

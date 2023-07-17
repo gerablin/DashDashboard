@@ -30,6 +30,12 @@ class MyApp extends StatelessWidget {
                 fontSize: 30,
                 color: AppColors.white,
               )),
+              titleSmall:GoogleFonts.manrope(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: AppColors.white,
+                  )) ,
               bodyMedium: GoogleFonts.manrope(
                   textStyle:
                       const TextStyle(fontSize: 14, color: AppColors.white)))),

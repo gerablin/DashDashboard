@@ -1,5 +1,6 @@
 import 'package:dash_dashboard/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../model/gas_station.dart';
 import '../../../services/gas_service.dart';
@@ -38,7 +39,16 @@ class _GasInformationState extends State<GasInformation> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child:  Text(textAlign: TextAlign.left,style: Theme.of(context).textTheme.titleMedium, " ~ Tankstellen",),
+            child: Row(
+              children: [
+                Text(
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  "Tankstellen",
+                ),
+                const ReloadButton()
+              ],
+            ),
           ),
           Row(
             children: [
@@ -53,3 +63,21 @@ class _GasInformationState extends State<GasInformation> {
   }
 }
 
+class ReloadButton extends StatelessWidget {
+  const ReloadButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(left: 8.0),
+      child: InkWell(
+        child: FaIcon(
+          FontAwesomeIcons.rotateLeft,
+          color: AppColors.white,
+        ),
+      ),
+    );
+  }
+}
