@@ -9,13 +9,13 @@ class GasStationRow extends StatelessWidget {
 
   const GasStationRow({
     super.key,
-    required GasStation this.station,
+    required this.station,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: SizeConfig.blockSizeHorizontal * 16,
+      width: SizeConfig.blockSizeHorizontal * 17,
       height: SizeConfig.blockSizeVertical * 30,
       child: Card(
         color: Colors.black12,
