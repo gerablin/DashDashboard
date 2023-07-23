@@ -51,62 +51,20 @@ class GasInformation extends ConsumerWidget {
   }
 }
 
-// class _GasInformationState extends State<GasInformation> {
-//   var _gasService = GasService();
-//   var _gasStations = List.empty();
-//
-//   void onClick() async {
-//     // _gasStations = await _gasService.fetchNearbyGasStations();
-//     setState(() {});
-//   }
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _gasStations = MockGasStations().gasStationList;
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(16.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Text(
-//                   textAlign: TextAlign.left,
-//                   style: Theme.of(context).textTheme.titleMedium,
-//                   "Tankstellen",
-//                 ),
-//                 const ReloadButton()
-//               ],
-//             ),
-//           ),
-//           Row(
-//             children: [
-//               ..._gasStations.map(
-//                 (station) => GasStationRow(station: station),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-class ReloadButton extends StatelessWidget {
+class ReloadButton extends ConsumerStatefulWidget {
   const ReloadButton({
     super.key,
   });
 
+  @override
+  ReloadButtonState createState() => ReloadButtonState();
+}
+
+class ReloadButtonState extends ConsumerState<ReloadButton> {
   void onClick() async {
     print("Clicked");
-    // _gasStations = await _gasService.fetchNearbyGasStations();
+    // request api Again
+    ref.refresh(gasStations);
   }
 
   @override
