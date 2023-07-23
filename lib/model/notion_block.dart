@@ -1,68 +1,22 @@
+import 'dart:convert';
+
 class NotionBlock {
-  final String? object;
-  final List<Result>? results;
-  final dynamic nextCursor;
-  final bool? hasMore;
-  final ObjectEnum? type;
-  final Block? block;
-  final String? developerSurvey;
-
-  NotionBlock({
-    this.object,
-    this.results,
-    this.nextCursor,
-    this.hasMore,
-    this.type,
-    this.block,
-    this.developerSurvey,
-  });
-
-  NotionBlock copyWith({
-    String? object,
-    List<Result>? results,
-    dynamic nextCursor,
-    bool? hasMore,
-    ObjectEnum? type,
-    Block? block,
-    String? developerSurvey,
-  }) =>
-      NotionBlock(
-        object: object ?? this.object,
-        results: results ?? this.results,
-        nextCursor: nextCursor ?? this.nextCursor,
-        hasMore: hasMore ?? this.hasMore,
-        type: type ?? this.type,
-        block: block ?? this.block,
-        developerSurvey: developerSurvey ?? this.developerSurvey,
-      );
-}
-
-class Block {
-  Block();
-
-  Block copyWith({
-}) =>
-Block(
-    );
-}
-
-class Result {
-  final ObjectEnum? object;
+  final NotionBlockObject? object;
   final String? id;
   final Parent? parent;
   final DateTime? createdTime;
   final DateTime? lastEditedTime;
-  final TedBy? createdBy;
-  final TedBy? lastEditedBy;
+  final UpdatedBy? createdBy;
+  final UpdatedBy? lastEditedBy;
   final bool? hasChildren;
   final bool? archived;
-  final PurpleType? type;
+  final NotionBlockType? type;
   final Paragraph? paragraph;
   final Heading3? heading3;
-  final Block? divider;
+  final Divider? divider;
   final ToDo? toDo;
 
-  Result({
+  NotionBlock({
     this.object,
     this.id,
     this.parent,
@@ -79,23 +33,23 @@ class Result {
     this.toDo,
   });
 
-  Result copyWith({
-    ObjectEnum? object,
+  NotionBlock copyWith({
+    NotionBlockObject? object,
     String? id,
     Parent? parent,
     DateTime? createdTime,
     DateTime? lastEditedTime,
-    TedBy? createdBy,
-    TedBy? lastEditedBy,
+    UpdatedBy? createdBy,
+    UpdatedBy? lastEditedBy,
     bool? hasChildren,
     bool? archived,
-    PurpleType? type,
+    NotionBlockType? type,
     Paragraph? paragraph,
     Heading3? heading3,
-    Block? divider,
+    Divider? divider,
     ToDo? toDo,
   }) =>
-      Result(
+      NotionBlock(
         object: object ?? this.object,
         id: id ?? this.id,
         parent: parent ?? this.parent,
@@ -111,28 +65,108 @@ class Result {
         divider: divider ?? this.divider,
         toDo: toDo ?? this.toDo,
       );
+
+  factory NotionBlock.fromRawJson(String str) =>
+      NotionBlock.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory NotionBlock.fromJson(Map<String, dynamic> json) => NotionBlock(
+        object: notionBlockObjectValues.map[json["object"]]!,
+        id: json["id"],
+        parent: json["parent"] == null ? null : Parent.fromJson(json["parent"]),
+        createdTime: json["created_time"] == null
+            ? null
+            : DateTime.parse(json["created_time"]),
+        lastEditedTime: json["last_edited_time"] == null
+            ? null
+            : DateTime.parse(json["last_edited_time"]),
+        createdBy: json["created_by"] == null
+            ? null
+            : UpdatedBy.fromJson(json["created_by"]),
+        lastEditedBy: json["last_edited_by"] == null
+            ? null
+            : UpdatedBy.fromJson(json["last_edited_by"]),
+        hasChildren: json["has_children"],
+        archived: json["archived"],
+        type: notionBlockTypeValues.map[json["type"]]!,
+        paragraph: json["paragraph"] == null
+            ? null
+            : Paragraph.fromJson(json["paragraph"]),
+        heading3: json["heading_3"] == null
+            ? null
+            : Heading3.fromJson(json["heading_3"]),
+        divider:
+            json["divider"] == null ? null : Divider.fromJson(json["divider"]),
+        toDo: json["to_do"] == null ? null : ToDo.fromJson(json["to_do"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "object": notionBlockObjectValues.reverse[object],
+        "id": id,
+        "parent": parent?.toJson(),
+        "created_time": createdTime?.toIso8601String(),
+        "last_edited_time": lastEditedTime?.toIso8601String(),
+        "created_by": createdBy?.toJson(),
+        "last_edited_by": lastEditedBy?.toJson(),
+        "has_children": hasChildren,
+        "archived": archived,
+        "type": notionBlockTypeValues.reverse[type],
+        "paragraph": paragraph?.toJson(),
+        "heading_3": heading3?.toJson(),
+        "divider": divider?.toJson(),
+        "to_do": toDo?.toJson(),
+      };
 }
 
-class TedBy {
-  final Object? object;
+class UpdatedBy {
+  final CreatedByObject? object;
   final String? id;
 
-  TedBy({
+  UpdatedBy({
     this.object,
     this.id,
   });
 
-  TedBy copyWith({
-    Object? object,
+  UpdatedBy copyWith({
+    CreatedByObject? object,
     String? id,
   }) =>
-      TedBy(
+      UpdatedBy(
         object: object ?? this.object,
         id: id ?? this.id,
       );
+
+  factory UpdatedBy.fromRawJson(String str) => UpdatedBy.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory UpdatedBy.fromJson(Map<String, dynamic> json) => UpdatedBy(
+        object: createdByObjectValues.map[json["object"]]!,
+        id: json["id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "object": createdByObjectValues.reverse[object],
+        "id": id,
+      };
 }
 
-enum Object { USER }
+enum CreatedByObject { USER }
+
+final createdByObjectValues = EnumValues({"user": CreatedByObject.USER});
+
+class Divider {
+  Divider();
+
+  factory Divider.fromRawJson(String str) => Divider.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Divider.fromJson(Map<String, dynamic> json) => Divider();
+
+  Map<String, dynamic> toJson() => {};
+}
 
 class Heading3 {
   final List<RichText>? richText;
@@ -155,9 +189,33 @@ class Heading3 {
         isToggleable: isToggleable ?? this.isToggleable,
         color: color ?? this.color,
       );
+
+  factory Heading3.fromRawJson(String str) =>
+      Heading3.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Heading3.fromJson(Map<String, dynamic> json) => Heading3(
+        richText: json["rich_text"] == null
+            ? []
+            : List<RichText>.from(
+                json["rich_text"]!.map((x) => RichText.fromJson(x))),
+        isToggleable: json["is_toggleable"],
+        color: colorValues.map[json["color"]]!,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "rich_text": richText == null
+            ? []
+            : List<dynamic>.from(richText!.map((x) => x.toJson())),
+        "is_toggleable": isToggleable,
+        "color": colorValues.reverse[color],
+      };
 }
 
 enum Color { DEFAULT }
+
+final colorValues = EnumValues({"default": Color.DEFAULT});
 
 class RichText {
   final RichTextType? type;
@@ -188,6 +246,29 @@ class RichText {
         plainText: plainText ?? this.plainText,
         href: href ?? this.href,
       );
+
+  factory RichText.fromRawJson(String str) =>
+      RichText.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory RichText.fromJson(Map<String, dynamic> json) => RichText(
+        type: richTextTypeValues.map[json["type"]]!,
+        text: json["text"] == null ? null : Text.fromJson(json["text"]),
+        annotations: json["annotations"] == null
+            ? null
+            : Annotations.fromJson(json["annotations"]),
+        plainText: json["plain_text"],
+        href: json["href"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": richTextTypeValues.reverse[type],
+        "text": text?.toJson(),
+        "annotations": annotations?.toJson(),
+        "plain_text": plainText,
+        "href": href,
+      };
 }
 
 class Annotations {
@@ -223,6 +304,29 @@ class Annotations {
         code: code ?? this.code,
         color: color ?? this.color,
       );
+
+  factory Annotations.fromRawJson(String str) =>
+      Annotations.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Annotations.fromJson(Map<String, dynamic> json) => Annotations(
+        bold: json["bold"],
+        italic: json["italic"],
+        strikethrough: json["strikethrough"],
+        underline: json["underline"],
+        code: json["code"],
+        color: colorValues.map[json["color"]]!,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "bold": bold,
+        "italic": italic,
+        "strikethrough": strikethrough,
+        "underline": underline,
+        "code": code,
+        "color": colorValues.reverse[color],
+      };
 }
 
 class Text {
@@ -242,11 +346,29 @@ class Text {
         content: content ?? this.content,
         link: link ?? this.link,
       );
+
+  factory Text.fromRawJson(String str) => Text.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Text.fromJson(Map<String, dynamic> json) => Text(
+        content: json["content"],
+        link: json["link"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "content": content,
+        "link": link,
+      };
 }
 
 enum RichTextType { TEXT }
 
-enum ObjectEnum { BLOCK }
+final richTextTypeValues = EnumValues({"text": RichTextType.TEXT});
+
+enum NotionBlockObject { BLOCK }
+
+final notionBlockObjectValues = EnumValues({"block": NotionBlockObject.BLOCK});
 
 class Paragraph {
   final List<RichText>? richText;
@@ -265,6 +387,26 @@ class Paragraph {
         richText: richText ?? this.richText,
         color: color ?? this.color,
       );
+
+  factory Paragraph.fromRawJson(String str) =>
+      Paragraph.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Paragraph.fromJson(Map<String, dynamic> json) => Paragraph(
+        richText: json["rich_text"] == null
+            ? []
+            : List<RichText>.from(
+                json["rich_text"]!.map((x) => RichText.fromJson(x))),
+        color: colorValues.map[json["color"]]!,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "rich_text": richText == null
+            ? []
+            : List<dynamic>.from(richText!.map((x) => x.toJson())),
+        "color": colorValues.reverse[color],
+      };
 }
 
 class Parent {
@@ -284,9 +426,25 @@ class Parent {
         type: type ?? this.type,
         pageId: pageId ?? this.pageId,
       );
+
+  factory Parent.fromRawJson(String str) => Parent.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Parent.fromJson(Map<String, dynamic> json) => Parent(
+        type: parentTypeValues.map[json["type"]]!,
+        pageId: json["page_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": parentTypeValues.reverse[type],
+        "page_id": pageId,
+      };
 }
 
 enum ParentType { PAGE_ID }
+
+final parentTypeValues = EnumValues({"page_id": ParentType.PAGE_ID});
 
 class ToDo {
   final List<RichText>? richText;
@@ -309,6 +467,46 @@ class ToDo {
         checked: checked ?? this.checked,
         color: color ?? this.color,
       );
+
+  factory ToDo.fromRawJson(String str) => ToDo.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory ToDo.fromJson(Map<String, dynamic> json) => ToDo(
+        richText: json["rich_text"] == null
+            ? []
+            : List<RichText>.from(
+                json["rich_text"]!.map((x) => RichText.fromJson(x))),
+        checked: json["checked"],
+        color: colorValues.map[json["color"]]!,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "rich_text": richText == null
+            ? []
+            : List<dynamic>.from(richText!.map((x) => x.toJson())),
+        "checked": checked,
+        "color": colorValues.reverse[color],
+      };
 }
 
-enum PurpleType { PARAGRAPH, HEADING_3, DIVIDER, TO_DO }
+enum NotionBlockType { PARAGRAPH, HEADING_3, DIVIDER, TO_DO }
+
+final notionBlockTypeValues = EnumValues({
+  "divider": NotionBlockType.DIVIDER,
+  "heading_3": NotionBlockType.HEADING_3,
+  "paragraph": NotionBlockType.PARAGRAPH,
+  "to_do": NotionBlockType.TO_DO
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
+}

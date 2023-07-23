@@ -1,24 +1,39 @@
-import 'package:dash_dashboard/services/notion_service.dart';
+import 'package:dash_dashboard/model/notion_block.dart' as notion;
+import 'package:dash_dashboard/providers/notion_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ShoppingList extends StatefulWidget {
+class ShoppingList extends ConsumerWidget {
   const ShoppingList({super.key});
 
   @override
-  State<ShoppingList> createState() => _ShoppingListState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<List<notion.NotionBlock>> todos = ref.watch(shoppingList);
+
+    return todos.when(
+      data: (todos) =>
+        SingleChildScrollView(
+        child: Column(children: [
+          ...todos.map((todo) =>ShoppingItem(text: todo.toDo?.richText?.first.plainText ?? "Internal parsing error") ),
+        ],),
+      ),
+      error: (err, stack) =>
+          Text('Error: $err',
+            style: const TextStyle(fontSize: 20, color: Colors.red),),
+      loading: () => const CircularProgressIndicator(),
+    );
+  }
 }
 
-class _ShoppingListState extends State<ShoppingList> {
+class ShoppingItem extends StatelessWidget {
+  final String text;
+  const ShoppingItem({
+    required this.text,
+    super.key,
+  });
 
   @override
-  void initState() {
-    super.initState();
-    NotionService().requestShoppingListPage();
-  }
-  @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(children: []),
-    );
+    return Text(text);
   }
 }
