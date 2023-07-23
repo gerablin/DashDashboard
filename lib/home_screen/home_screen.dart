@@ -1,4 +1,5 @@
 import 'package:dash_dashboard/home_screen/sections/clock/clock.dart';
+import 'package:dash_dashboard/home_screen/sections/notion/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'sections/gas/gas_information.dart';
 
@@ -12,10 +13,16 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Dashboard"),
       ),
-      body:  const Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: const Column(
         children: [
-          Clock(),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ShoppingList(),
+              Clock(),
+            ],
+          ),
           GasInformation(),
         ],
       ),

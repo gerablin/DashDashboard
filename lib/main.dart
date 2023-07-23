@@ -2,10 +2,12 @@ import 'package:dash_dashboard/home_screen/home_screen.dart';
 import 'package:dash_dashboard/utils/app_colors.dart';
 import 'package:dash_dashboard/utils/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -23,11 +25,13 @@ class MyApp extends StatelessWidget {
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 64,
+                    letterSpacing: 1.5,
                 color: AppColors.white,
               )),
               titleMedium: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
+                    letterSpacing: 3.5,
                 fontSize: 30,
                 color: AppColors.white,
               )),
@@ -35,6 +39,7 @@ class MyApp extends StatelessWidget {
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
+                    letterSpacing: 1.5,
                     color: AppColors.white,
                   )) ,
               bodyMedium: GoogleFonts.manrope(
