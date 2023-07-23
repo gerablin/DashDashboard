@@ -10,3 +10,5 @@ final gasStations = FutureProvider<List<GasStation>>((ref) async {
   print(gasStations);
   return gasStations.map((station) => GasStation.fromJson(station)).toList();
 });
+
+final gasStationsLastUpdated = Provider<DateTime>((ref) => DateTime.now());
