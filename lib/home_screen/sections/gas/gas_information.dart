@@ -1,8 +1,9 @@
-import 'package:dash_dashboard/services/gas_repository.dart';
+import 'package:dash_dashboard/providers/gas_repository.dart';
 import 'package:dash_dashboard/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import '../../../model/gas_station.dart';
 import 'gas_information_row.dart';
 
@@ -12,6 +13,7 @@ class GasInformation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<List<GasStation>> stations = ref.watch(gasStations);
+    final lastUpdated = DateFormat("Hms").format(ref.watch(gasStationsLastUpdated));
 
     return stations.when(
       data: (stations) => Padding(
@@ -28,7 +30,17 @@ class GasInformation extends ConsumerWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                     "Tankstellen",
                   ),
-                  const ReloadButton()
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: ReloadButton(),
+                  ) ,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(lastUpdated.toString(),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontStyle: FontStyle.italic)
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -51,62 +63,22 @@ class GasInformation extends ConsumerWidget {
   }
 }
 
-// class _GasInformationState extends State<GasInformation> {
-//   var _gasService = GasService();
-//   var _gasStations = List.empty();
-//
-//   void onClick() async {
-//     // _gasStations = await _gasService.fetchNearbyGasStations();
-//     setState(() {});
-//   }
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _gasStations = MockGasStations().gasStationList;
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(16.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Text(
-//                   textAlign: TextAlign.left,
-//                   style: Theme.of(context).textTheme.titleMedium,
-//                   "Tankstellen",
-//                 ),
-//                 const ReloadButton()
-//               ],
-//             ),
-//           ),
-//           Row(
-//             children: [
-//               ..._gasStations.map(
-//                 (station) => GasStationRow(station: station),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-class ReloadButton extends StatelessWidget {
+class ReloadButton extends ConsumerStatefulWidget {
   const ReloadButton({
     super.key,
   });
 
+  @override
+  ReloadButtonState createState() => ReloadButtonState();
+}
+
+class ReloadButtonState extends ConsumerState<ReloadButton> {
   void onClick() async {
     print("Clicked");
-    // _gasStations = await _gasService.fetchNearbyGasStations();
+    // request api Again
+    // refresh last updated time
+    ref.refresh(gasStations);
+    ref.refresh(gasStationsLastUpdated);
   }
 
   @override
