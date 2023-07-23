@@ -11,15 +11,31 @@ class ShoppingList extends ConsumerWidget {
     AsyncValue<List<notion.NotionBlock>> todos = ref.watch(shoppingList);
 
     return todos.when(
-      data: (todos) =>
-        SingleChildScrollView(
-        child: Column(children: [
-          ...todos.map((todo) =>ShoppingItem(text: todo.toDo?.richText?.first.plainText ?? "Internal parsing error") ),
-        ],),
+      data: (todos) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.titleMedium,
+              "Einkaufsliste",
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  ...todos.map((todo) => ShoppingItem(
+                      text: todo.toDo?.richText?.first.plainText ??
+                          "Internal parsing error")),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-      error: (err, stack) =>
-          Text('Error: $err',
-            style: const TextStyle(fontSize: 20, color: Colors.red),),
+      error: (err, stack) => Text(
+        'Error: $err',
+        style: const TextStyle(fontSize: 20, color: Colors.red),
+      ),
       loading: () => const CircularProgressIndicator(),
     );
   }
@@ -27,6 +43,7 @@ class ShoppingList extends ConsumerWidget {
 
 class ShoppingItem extends StatelessWidget {
   final String text;
+
   const ShoppingItem({
     required this.text,
     super.key,
@@ -34,6 +51,10 @@ class ShoppingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text);
+    return Text(
+      text,
+      textAlign: TextAlign.left,
+      style: Theme.of(context).textTheme.titleSmall,
+    );
   }
 }

@@ -25,11 +25,13 @@ class MyApp extends StatelessWidget {
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 64,
+                    letterSpacing: 1.5,
                 color: AppColors.white,
               )),
               titleMedium: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
+                    letterSpacing: 3.5,
                 fontSize: 30,
                 color: AppColors.white,
               )),
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
+                    letterSpacing: 1.5,
                     color: AppColors.white,
                   )) ,
               bodyMedium: GoogleFonts.manrope(
