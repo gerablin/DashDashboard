@@ -14,7 +14,6 @@ class HomeScreen extends StatelessWidget {
         title: const Text("Dashboard"),
       ),
       body: const Column(
-        // crossAxisAlignment: CrossAxisAlignment.,
         children: [
           Row(
             mainAxisSize: MainAxisSize.max,

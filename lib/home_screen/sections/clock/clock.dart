@@ -46,7 +46,6 @@ class _ClockState extends State<Clock> {
       padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
-          // const Spacer(),
           Text(_currentHour,style: Theme.of(context).textTheme.titleLarge,),
           const Colon(),
           Text(_currentMinute,style: Theme.of(context).textTheme.titleLarge,),
