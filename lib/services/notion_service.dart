@@ -10,7 +10,7 @@ class NotionService {
 
   Future<http.Response> requestShoppingListPage() async {
     final url =
-        "${baseUrl}/blocks/${dotenv.env['NOTION_SHOPPING_PAGE_ID']}/children";
+        "$baseUrl/blocks/${dotenv.env['NOTION_SHOPPING_PAGE_ID']}/children";
     final response = await _client.get(Uri.parse(url), headers: {
       HttpHeaders.authorizationHeader: "Bearer ${dotenv.env['NOTION_API_KEY']}",
       "Notion-Version": "2022-06-28",

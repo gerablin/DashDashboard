@@ -16,7 +16,7 @@ class GasStationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: SizeConfig.blockSizeHorizontal * 17,
-      height: SizeConfig.blockSizeVertical * 30,
+      height: SizeConfig.blockSizeVertical * 32,
       child: Card(
         color: Colors.black12,
         shape: const RoundedRectangleBorder(
