@@ -7,7 +7,6 @@ final gasStations = FutureProvider<List<GasStation>>((ref) async {
   List gasStations = List.empty();
   final response = await GasService().requestNearbyGasStations();
   gasStations = json.decode(response.body)["stations"];
-  print(gasStations);
   return gasStations.map((station) => GasStation.fromJson(station)).toList();
 });
 

@@ -74,7 +74,6 @@ class ReloadButton extends ConsumerStatefulWidget {
 
 class ReloadButtonState extends ConsumerState<ReloadButton> {
   void onClick() async {
-    print("Clicked");
     // request api Again
     // refresh last updated time
     ref.refresh(gasStations);

@@ -13,18 +13,21 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Dashboard"),
       ),
-      body: const Column(
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ShoppingList(),
-              Clock(),
-            ],
-          ),
-          GasInformation(),
-        ],
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ShoppingList(),
+                Clock(),
+              ],
+            ),
+            GasInformation(),
+          ],
+        ),
       ),
     );
   }
