@@ -1,7 +1,11 @@
 import 'package:dash_dashboard/model/notion_block.dart' as notion;
 import 'package:dash_dashboard/providers/notion_repository.dart';
+import 'package:dash_dashboard/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../utils/app_colors.dart';
 
 class ShoppingList extends ConsumerWidget {
   const ShoppingList({super.key});
@@ -11,32 +15,69 @@ class ShoppingList extends ConsumerWidget {
     AsyncValue<List<notion.NotionBlock>> todos = ref.watch(shoppingList);
 
     return todos.when(
-      data: (todos) => Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.titleMedium,
-              "Einkaufsliste",
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...todos.map((todo) => ShoppingItem(
-                      text: todo.toDo?.richText?.first.plainText ??
-                          "Internal parsing error")),
-                ],
+      data: (todos) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(24.0),
+            child: ShoppingListTitle(),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 24.0),
+            child: SizedBox(
+              height: SizeConfig.blockSizeVertical * 35,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ...todos.map((todo) => ShoppingItem(
+                        text: todo.toDo?.richText?.first.plainText ??
+                            "Internal parsing error")),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       error: (err, stack) => Text(
         'Error: $err',
         style: const TextStyle(fontSize: 20, color: Colors.red),
       ),
       loading: () => const CircularProgressIndicator(),
+    );
+  }
+}
+
+class ShoppingListTitle extends StatelessWidget {
+  const ShoppingListTitle({
+    super.key,
+  });
+
+  void onClick() {
+    // open dialog to add new entry
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          textAlign: TextAlign.left,
+          style: Theme.of(context).textTheme.titleMedium,
+          "Einkaufsliste",
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 24.0),
+          child: InkWell(
+            onTap: () => onClick(),
+            child: const FaIcon(
+              FontAwesomeIcons.cartPlus,
+              color: AppColors.white,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -53,7 +94,7 @@ class ShoppingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      textAlign: TextAlign.left,
+      textAlign: TextAlign.start,
       style: Theme.of(context).textTheme.titleSmall,
     );
   }
