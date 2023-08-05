@@ -72,7 +72,7 @@ class NotionBlock {
   String toRawJson() => json.encode(toJson());
 
   factory NotionBlock.fromJson(Map<String, dynamic> json) => NotionBlock(
-        object: notionBlockObjectValues.map[json["object"]]!,
+        object: notionBlockObjectValues.map[json["object"]],
         id: json["id"],
         parent: json["parent"] == null ? null : Parent.fromJson(json["parent"]),
         createdTime: json["created_time"] == null
@@ -89,7 +89,7 @@ class NotionBlock {
             : UpdatedBy.fromJson(json["last_edited_by"]),
         hasChildren: json["has_children"],
         archived: json["archived"],
-        type: notionBlockTypeValues.map[json["type"]]!,
+        type: notionBlockTypeValues.map[json["type"]],
         paragraph: json["paragraph"] == null
             ? null
             : Paragraph.fromJson(json["paragraph"]),
@@ -103,18 +103,7 @@ class NotionBlock {
 
   Map<String, dynamic> toJson() => {
         "object": notionBlockObjectValues.reverse[object],
-        "id": id,
-        "parent": parent?.toJson(),
-        "created_time": createdTime?.toIso8601String(),
-        "last_edited_time": lastEditedTime?.toIso8601String(),
-        "created_by": createdBy?.toJson(),
-        "last_edited_by": lastEditedBy?.toJson(),
-        "has_children": hasChildren,
-        "archived": archived,
         "type": notionBlockTypeValues.reverse[type],
-        "paragraph": paragraph?.toJson(),
-        "heading_3": heading3?.toJson(),
-        "divider": divider?.toJson(),
         "to_do": toDo?.toJson(),
       };
 }
@@ -142,7 +131,7 @@ class UpdatedBy {
   String toRawJson() => json.encode(toJson());
 
   factory UpdatedBy.fromJson(Map<String, dynamic> json) => UpdatedBy(
-        object: createdByObjectValues.map[json["object"]]!,
+        object: createdByObjectValues.map[json["object"]],
         id: json["id"],
       );
 
@@ -201,7 +190,7 @@ class Heading3 {
             : List<RichText>.from(
                 json["rich_text"]!.map((x) => RichText.fromJson(x))),
         isToggleable: json["is_toggleable"],
-        color: colorValues.map[json["color"]]!,
+        color: colorValues.map[json["color"]],
       );
 
   Map<String, dynamic> toJson() => {
@@ -219,7 +208,7 @@ final colorValues = EnumValues({"default": Color.DEFAULT});
 
 class RichText {
   final RichTextType? type;
-  final Text? text;
+  final RichTextText? text;
   final Annotations? annotations;
   final String? plainText;
   final dynamic href;
@@ -234,7 +223,7 @@ class RichText {
 
   RichText copyWith({
     RichTextType? type,
-    Text? text,
+    RichTextText? text,
     Annotations? annotations,
     String? plainText,
     dynamic href,
@@ -253,8 +242,8 @@ class RichText {
   String toRawJson() => json.encode(toJson());
 
   factory RichText.fromJson(Map<String, dynamic> json) => RichText(
-        type: richTextTypeValues.map[json["type"]]!,
-        text: json["text"] == null ? null : Text.fromJson(json["text"]),
+        type: richTextTypeValues.map[json["type"]],
+        text: json["text"] == null ? null : RichTextText.fromJson(json["text"]),
         annotations: json["annotations"] == null
             ? null
             : Annotations.fromJson(json["annotations"]),
@@ -265,9 +254,6 @@ class RichText {
   Map<String, dynamic> toJson() => {
         "type": richTextTypeValues.reverse[type],
         "text": text?.toJson(),
-        "annotations": annotations?.toJson(),
-        "plain_text": plainText,
-        "href": href,
       };
 }
 
@@ -316,7 +302,7 @@ class Annotations {
         strikethrough: json["strikethrough"],
         underline: json["underline"],
         code: json["code"],
-        color: colorValues.map[json["color"]]!,
+        color: colorValues.map[json["color"]],
       );
 
   Map<String, dynamic> toJson() => {
@@ -329,29 +315,29 @@ class Annotations {
       };
 }
 
-class Text {
+class RichTextText {
   final String? content;
   final dynamic link;
 
-  Text({
+  RichTextText({
     this.content,
     this.link,
   });
 
-  Text copyWith({
+  RichTextText copyWith({
     String? content,
     dynamic link,
   }) =>
-      Text(
+      RichTextText(
         content: content ?? this.content,
         link: link ?? this.link,
       );
 
-  factory Text.fromRawJson(String str) => Text.fromJson(json.decode(str));
+  factory RichTextText.fromRawJson(String str) => RichTextText.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Text.fromJson(Map<String, dynamic> json) => Text(
+  factory RichTextText.fromJson(Map<String, dynamic> json) => RichTextText(
         content: json["content"],
         link: json["link"],
       );
@@ -398,7 +384,7 @@ class Paragraph {
             ? []
             : List<RichText>.from(
                 json["rich_text"]!.map((x) => RichText.fromJson(x))),
-        color: colorValues.map[json["color"]]!,
+        color: colorValues.map[json["color"]],
       );
 
   Map<String, dynamic> toJson() => {
@@ -432,7 +418,7 @@ class Parent {
   String toRawJson() => json.encode(toJson());
 
   factory Parent.fromJson(Map<String, dynamic> json) => Parent(
-        type: parentTypeValues.map[json["type"]]!,
+        type: parentTypeValues.map[json["type"]],
         pageId: json["page_id"],
       );
 
@@ -478,7 +464,7 @@ class ToDo {
             : List<RichText>.from(
                 json["rich_text"]!.map((x) => RichText.fromJson(x))),
         checked: json["checked"],
-        color: colorValues.map[json["color"]]!,
+        color: colorValues.map[json["color"]],
       );
 
   Map<String, dynamic> toJson() => {

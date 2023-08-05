@@ -1,5 +1,6 @@
 import 'package:dash_dashboard/model/notion_block.dart' as notion;
 import 'package:dash_dashboard/providers/notion_repository.dart';
+import 'package:dash_dashboard/services/notion_service.dart';
 import 'package:dash_dashboard/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,10 +55,6 @@ class ShoppingListTitle extends StatelessWidget {
     super.key,
   });
 
-  void onClick() {
-    // open dialog to add new entry
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -67,17 +64,38 @@ class ShoppingListTitle extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
           "Einkaufsliste",
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 24.0),
-          child: InkWell(
-            onTap: () => onClick(),
-            child: const FaIcon(
-              FontAwesomeIcons.cartPlus,
-              color: AppColors.white,
-            ),
-          ),
-        ),
+        const Padding(
+            padding: EdgeInsets.only(left: 24.0), child: AddItemButton()),
       ],
+    );
+  }
+}
+
+class AddItemButton extends ConsumerStatefulWidget {
+  const AddItemButton({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => AddItemButtonState();
+}
+
+class AddItemButtonState extends ConsumerState<AddItemButton> {
+  void onClick() async {
+    // open dialog to add new entry
+
+    // add new entry
+    await NotionService().postShoppingItemToList();
+    ref.refresh(shoppingList);
+    //retrieve new list
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onClick(),
+      child: const FaIcon(
+        FontAwesomeIcons.cartPlus,
+        color: AppColors.white,
+      ),
     );
   }
 }
