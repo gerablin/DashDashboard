@@ -12,3 +12,11 @@ final shoppingList = FutureProvider<List<NotionBlock>>((ref) async {
       .toList()
       .where((element) => element.toDo != null).toList();
 });
+
+void postNotionTodo(String todoName) async {
+
+  //todo: convert string to a notion block
+
+  //call notion API to post the block to the list
+  // final response = await NotionService().postShoppingItemToList(child);
+}
