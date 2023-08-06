@@ -1,11 +1,11 @@
+import 'package:dash_dashboard/home_screen/sections/notion/widgets/AddItemTextField.dart';
 import 'package:dash_dashboard/model/notion_block.dart' as notion;
-import 'package:dash_dashboard/providers/notion_repository.dart';
-import 'package:dash_dashboard/services/notion_service.dart';
+import 'package:dash_dashboard/providers/notion_provider.dart';
 import 'package:dash_dashboard/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import '../../../model/notion_block.dart';
 import '../../../utils/app_colors.dart';
 
 class ShoppingList extends ConsumerWidget {
@@ -25,20 +25,9 @@ class ShoppingList extends ConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 24.0),
-            child: SizedBox(
-              height: SizeConfig.blockSizeVertical * 35,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ...todos.map((todo) => ShoppingItem(
-                        text: todo.toDo?.richText?.first.plainText ??
-                            "Internal parsing error")),
-                  ],
-                ),
-              ),
-            ),
+            child: ShoppingListScrollView(todos: todos),
           ),
+          const AddItemTextField()
         ],
       ),
       error: (err, stack) => Text(
@@ -50,6 +39,30 @@ class ShoppingList extends ConsumerWidget {
   }
 }
 
+
+class ShoppingListScrollView extends StatelessWidget {
+  const ShoppingListScrollView({super.key, required this.todos});
+
+  final List<NotionBlock> todos;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: SizeConfig.blockSizeVertical * 35,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ...todos.map((todo) => ShoppingItem(
+                text: todo.toDo?.richText?.first.plainText ??
+                    "Internal parsing error")),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ShoppingListTitle extends StatelessWidget {
   const ShoppingListTitle({
     super.key,
@@ -57,36 +70,18 @@ class ShoppingListTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          textAlign: TextAlign.left,
-          style: Theme.of(context).textTheme.titleMedium,
-          "Einkaufsliste",
-        ),
-        const Padding(
-            padding: EdgeInsets.only(left: 24.0), child: AddItemButton()),
-      ],
+    return Text(
+      textAlign: TextAlign.left,
+      style: Theme.of(context).textTheme.titleMedium,
+      "Einkaufsliste",
     );
   }
 }
 
-class AddItemButton extends ConsumerStatefulWidget {
-  const AddItemButton({super.key});
+class AddItemButton extends StatelessWidget {
+  const AddItemButton({super.key, required this.onClick});
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => AddItemButtonState();
-}
-
-class AddItemButtonState extends ConsumerState<AddItemButton> {
-  void onClick() async {
-    // open dialog to add new entry
-
-    // add new entry
-    await NotionService().postShoppingItemToList();
-    ref.refresh(shoppingList);
-    //retrieve new list
-  }
+  final Function onClick;
 
   @override
   Widget build(BuildContext context) {

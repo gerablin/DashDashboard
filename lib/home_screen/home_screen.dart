@@ -8,12 +8,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("Dashboard"),
-      ),
-      body: const SingleChildScrollView(
+    return const Scaffold(
+      appBar: null,
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Row(
