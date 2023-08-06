@@ -1,4 +1,4 @@
-import 'package:dash_dashboard/providers/gas_repository.dart';
+import 'package:dash_dashboard/providers/gas_provider.dart';
 import 'package:dash_dashboard/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

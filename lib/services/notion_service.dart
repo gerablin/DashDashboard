@@ -21,33 +21,15 @@ class NotionService {
     return response;
   }
 
-  Future<http.Response> postShoppingItemToList() async {
+  Future<http.Response> postShoppingItemToList(NotionBlock todo) async {
     // the id where the item will be added below
     // this is the divider below the title and above the first item on the notion page
     const notionBlockId = "08af88dd-97aa-416f-bda7-496c49c56096";
     final url = "$baseUrl/blocks/$notionBlockId/children";
 
     //create notion block
-    final child = NotionBlock(
-      object: NotionBlockObject.BLOCK,
-      type: NotionBlockType.TO_DO,
-      toDo: ToDo(
-        richText: [
-          RichText(
-            type: RichTextType.TEXT,
-            text: RichTextText(
-              content: "TESTSTRING",
-              link: null
-            )
-          )
-        ],
-        checked: false,
-        color: Color.DEFAULT
-      )
-    );
-    //
     String jsonData = json.encode({
-      "children": [child]
+      "children": [todo]
     });
 
     print(jsonData.toString());
