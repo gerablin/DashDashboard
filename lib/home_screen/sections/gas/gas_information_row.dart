@@ -23,7 +23,7 @@ class GasStationRow extends StatelessWidget {
             side: BorderSide(color: AppColors.accentBlue),
             borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -31,29 +31,87 @@ class GasStationRow extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text(textAlign: TextAlign.center, style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleMedium, "${station.getSuperPrice()} €"),
-                    Text(textAlign: TextAlign.center, style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleSmall, "${station.dist.toString()} KM")
+                    GasPriceText(station: station),
+                    StationDistanceText(station: station)
                   ],
                 ),
               ),
-              Text(textAlign: TextAlign.center, style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodyMedium, "${station.name}"),
-              Text(textAlign: TextAlign.center, style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodyMedium, "${station.street}")
+              StationNameText(station: station),
+              StationAdressText(station: station)
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class StationAdressText extends StatelessWidget {
+  const StationAdressText({
+    super.key,
+    required this.station,
+  });
+
+  final GasStation station;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        style: Theme.of(context).textTheme.bodyMedium,
+        "${station.street}");
+  }
+}
+
+class StationNameText extends StatelessWidget {
+  const StationNameText({
+    super.key,
+    required this.station,
+  });
+
+  final GasStation station;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        style: Theme.of(context).textTheme.bodyMedium,
+        "${station.name}");
+  }
+}
+
+class GasPriceText extends StatelessWidget {
+  const GasPriceText({
+    super.key,
+    required this.station,
+  });
+
+  final GasStation station;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.titleMedium,
+        "${station.getSuperPrice()} €");
+  }
+}
+
+class StationDistanceText extends StatelessWidget {
+  const StationDistanceText({
+    super.key,
+    required this.station,
+  });
+
+  final GasStation station;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.titleSmall,
+        "${station.dist.toString()} KM");
   }
 }

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
               titleLarge: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 64,
+                fontSize: 26,
                     letterSpacing: 1.5,
                 color: AppColors.white,
               )),
@@ -32,19 +32,19 @@ class MyApp extends StatelessWidget {
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                     letterSpacing: 3.5,
-                fontSize: 30,
+                fontSize: 16,
                 color: AppColors.white,
               )),
               titleSmall:GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 14,
                     letterSpacing: 1.5,
                     color: AppColors.white,
                   )) ,
               bodyMedium: GoogleFonts.manrope(
                   textStyle:
-                      const TextStyle(fontSize: 14, color: AppColors.white)))),
+                      const TextStyle(fontSize: 12, color: AppColors.white)))),
       home: const HomeScreen(),
     );
   }

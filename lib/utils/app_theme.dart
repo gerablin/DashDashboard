@@ -14,10 +14,10 @@ class AppTheme {
       ),
       titleMedium: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 22,
+        fontSize: 14,
         color: AppColors.white,
       ),
-      bodyMedium: TextStyle(fontSize: 16, color: AppColors.white),
+      bodyMedium: TextStyle(fontSize: 12, color: AppColors.white),
     ),
     // colorScheme:
     // ColorScheme.fromSwatch().copyWith(secondary: AppColors.accentColor),
